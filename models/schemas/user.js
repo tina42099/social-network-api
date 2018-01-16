@@ -10,12 +10,12 @@ var userSchema = new Schema({
     age: Number,
     gender: String,
     address: String,
-    check-ins: [{
+    check_ins: [{
         location: [{
             place: String,
             status: String,
-            check-in-time: Date,
-            check-out-time: Date
+            check_in_time: Date,
+            check_out_time: Date
         }],
         friends: [String],
         interests: [String],
