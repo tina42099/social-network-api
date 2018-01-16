@@ -32,6 +32,10 @@ router.route('/cities/:cityId/id')
   .put(cities.updateCity)
   .delete(cities.deleteCity)
 
+  
+router.route('/auth/login')
+  .post(auth.loginUser)
+
 
 /*
 * Auth Routes
