@@ -91,3 +91,34 @@ exports.getUserByEmail = (req, res, next) => {
     return res.json(user)    
   })
 }
+
+exports.addFriend = (req, res, next) => {
+    User.findById(req.body.userId).then(user => {
+        if(!user) res.status(404).send('No user with id: ' + req.body.userId)
+        if(user.friends.includes(req.body.friendId)) {
+            return res.status(400).send('User is already friends with this user')
+        }
+        if(req.body.userId === req.body.friendId) {
+            return res.status(400).send('User cannot add him/herself as a friend')
+        }
+        user.friends.push(req.body.friendId)
+        user.markModified('friends')
+        user.save()
+        return res.json(user)
+    }).catch(next)
+}
+
+exports.addInterests = (req, res, next) => {
+    User.findById(req.body.userId)
+    .then((user) => {
+        for (var i in req.body.interests) {
+            if(!user.interests.includes(req.body.interests[i])) {
+                user.interests.push(req.body.interests[i])
+            }
+        }
+        user.markModified('interests')
+        user.save()
+        return res.json(user)
+    }).catch(next)
+}
+

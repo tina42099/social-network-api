@@ -18,11 +18,12 @@ var userSchema = new Schema({
             check_in_time: Date,
             check_out_time: Date
         }],
-        friends: [String],
-        interests: [String],
     }],
+    friends: [String],
+    interests: [String],
   },
   {
+    usePushEach: true,
     toObject: { getters: true },
     timestamps: {
       createdAt: 'createdDate',
