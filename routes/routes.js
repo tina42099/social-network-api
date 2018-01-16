@@ -12,6 +12,7 @@ const users = require('../controllers/users')
 */
 router.route('/users')
   .post(users.createUser)
+  //.get(auth.validateUser, users.getAllUsers)
 
 router.route('/users/:userId/id')
   .get(auth.validateUser, users.getUserById)
@@ -23,10 +24,12 @@ router.route('/users/:email/email')
 
 router.route('/cities')
   .post(cities.createCity)
+  .get(cities.getAllCities)
 
 router.route('/cities/:cityId/id')
   .get(cities.getCityById)
   .put(cities.updateCity)
+  .delete(cities.deleteCity)
 
 
 /*

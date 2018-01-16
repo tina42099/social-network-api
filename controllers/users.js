@@ -75,3 +75,11 @@ exports.deleteUser = (req, res, next) => {
     .then(user => res.sendStatus(200))
     .catch(next);
 }
+
+exports.getUserByEmail = (req, res, next) => {
+  User.findOne({ email: req.params.email }, (err, user) => {
+    if (err) return next(err)
+    if (!user) return res.status(404).send('No user with email: ' + req.params.email)
+    return res.json(user)    
+  })
+}
