@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('../controllers/auth')
+const cities = require('../controllers/cities')
 const users = require('../controllers/users')
 
 
