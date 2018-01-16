@@ -11,6 +11,7 @@ var citySchema = new Schema({
     image: String
   },
   {
+    usePushEach: true,
     toObject: { getters: true },
     timestamps: {
       createdAt: 'createdDate',

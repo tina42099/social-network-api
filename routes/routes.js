@@ -13,7 +13,7 @@ const users = require('../controllers/users')
 */
 router.route('/users')
   .post(users.createUser)
-  //.get(auth.validateUser, users.getAllUsers)
+  .get(users.getAllUsers)
 
 router.route('/users/:userId/id')
   .get(auth.validateUser, users.getUserById)
@@ -32,9 +32,15 @@ router.route('/cities/:cityId/id')
   .put(cities.updateCity)
   .delete(cities.deleteCity)
 
-  
+
 router.route('/auth/login')
   .post(auth.loginUser)
+
+router.route('/users/addFriend')
+  .post(users.addFriend)
+
+router.route('/users/addInterests')
+  .post(users.addInterests)
 
 
 /*
