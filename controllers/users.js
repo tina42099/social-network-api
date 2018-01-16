@@ -10,6 +10,8 @@ exports.createUser = (req, res, next) => {
     const userData = {};
     // validate email
     // http://emailregex.com
+    if (req.body.name)
+        userData.name = req.body.name
     if (req.body.email) {
         if (!(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(req.body.email)))
             return res.status(400).send('Invalid email');
@@ -22,6 +24,12 @@ exports.createUser = (req, res, next) => {
         userData.hash = req.body.password;
     if (req.body.hash)
         userData.hash = req.body.hash;
+    if (req.body.age)
+        userData.age = req.body.age
+    if (req.body.gender)
+        userData.gender = req.body.gender
+    if (req.body.address)
+        userData.address = req.body.address
 
     // create new user
     const newUser = new User(userData);
