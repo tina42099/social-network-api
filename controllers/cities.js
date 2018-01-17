@@ -35,7 +35,7 @@ exports.createCity = (req, res, next) => {
 };
 
 exports.getAllCities = (req, res, next) => {
-    City.find({}).then(citys => res.json(citys)).catch(next);
+    City.find({}).then(cities => res.json(cities)).catch(next);
 }
 
 exports.getCityById = (req, res, next) => {
