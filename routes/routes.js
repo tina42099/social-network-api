@@ -37,10 +37,13 @@ router.route('/auth/login')
   .post(auth.loginUser)
 
 router.route('/users/addFriend')
-  .post(users.addFriend)
+  .post(auth.validateUser, users.addFriend)
 
 router.route('/users/addInterests')
-  .post(users.addInterests)
+  .post(auth.validateUser, users.addInterests)
+
+router.route('/search/:value')
+  .get(auth.validateUser, users.search)
 
 
 /*
