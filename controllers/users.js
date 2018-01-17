@@ -122,3 +122,10 @@ exports.addInterests = (req, res, next) => {
     }).catch(next)
 }
 
+exports.search = (req, res, next) => {
+    User.find({"name": { $regex : req.params.value } })
+    .then((user) => {
+        console.log(JSON.stringify(user))
+        return res.json(user)
+    })
+}

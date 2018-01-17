@@ -42,6 +42,9 @@ router.route('/users/addFriend')
 router.route('/users/addInterests')
   .post(users.addInterests)
 
+router.route('/search/:value')
+  .get(users.search)
+
 
 /*
 * Auth Routes
