@@ -108,7 +108,7 @@ exports.addFriend = (req, res, next) => {
     }).catch(next)
 }
 
-exports.addInterests = (req, res, next) => {
+exports.addInterests = (req, res, next) => {    
     User.findById(req.body.userId)
     .then((user) => {
         for (var i in req.body.interests) {
