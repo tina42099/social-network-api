@@ -1,5 +1,5 @@
 {
-  "name": "api-starter-app",
+  "name": "social-network-api",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -18,7 +18,7 @@
     "express": "~4.13.1",
     "jwt-simple": "^0.5.1",
     "mongo": "^0.1.0",
-    "mongoose": "^4.12.4",
+    "mongoose": "^4.13.9",
     "morgan": "~1.6.1",
     "nodemon": "^1.12.1",
     "serve-favicon": "~2.3.0"
