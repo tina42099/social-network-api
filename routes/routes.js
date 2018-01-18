@@ -42,7 +42,7 @@ router.route('/users/checkIn')
 router.route('/users/checkOut')
   .put(users.updateCheckOut)
 
-router.route('/users/addFriend')
+router.route('/users/:friendId/addFriend')
   .post(auth.validateUser, users.addFriend)
 
 router.route('/users/addInterests')

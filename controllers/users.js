@@ -207,14 +207,17 @@ exports.getUserByEmail = (req, res, next) => {
 
 exports.addFriend = (req, res, next) => {
     User.findById(req.body.userId).then(user => {
+        console.log(req.body.userId)
+        console.log(req.params.friendId)
         if(!user) res.status(404).send('No user with id: ' + req.body.userId)
-        if(user.friends.includes(req.body.friendId)) {
+        if(user.friends.includes(req.params.friendId)) {
             return res.status(400).send('User is already friends with this user')
         }
-        if(req.body.userId === req.body.friendId) {
+        if(req.body.userId === req.params.friendId) {
             return res.status(400).send('User cannot add him/herself as a friend')
         }
-        user.friends.push(req.body.friendId)
+        user.friends.push(req.params.friendId)
+        console.log(user.friends)
         user.markModified('friends')
         user.save()
         return res.json(user)
