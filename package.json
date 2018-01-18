@@ -16,6 +16,7 @@
     "debug": "~2.2.0",
     "email-validator": "^1.0.7",
     "express": "~4.13.1",
+    "geocoder": "^0.2.3",
     "jwt-simple": "^0.5.1",
     "mongo": "^0.1.0",
     "mongoose": "^4.13.9",
