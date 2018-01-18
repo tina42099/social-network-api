@@ -98,7 +98,7 @@ exports.updateCheckIn = (req, res, next) => {
                 const city = newData[0]
                 const user = newData[1]
                 if (city) {
-                    city.past_visitors.push(req.body.userId)
+                    city.past_visitors.push(req.body.id)
                     city.markModified('past_visitors')
                     city.save()
                     .then(() => {
