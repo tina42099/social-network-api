@@ -21,7 +21,6 @@ var userSchema = new Schema({
     }],
     friends: [String],
     interests: [String],
-    url: String
   },
   {
     usePushEach: true,
