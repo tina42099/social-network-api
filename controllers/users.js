@@ -1,8 +1,9 @@
 const User = require('../models/schemas/user');
-const City = require('../models/schemas/city');
+const City = require('../models/schemas/city')
 const config = require('../models/config');
 const jwt = require('jwt-simple')
 const geocoding = require('geocoder')
+
 /*
 * C.R.U.D. routes
 */
@@ -147,6 +148,9 @@ exports.updateCheckIn = (req, res, next) => {
                             check_in_time: new Date()
                         }
                         console.log(newCheckIn)
+                        if (user.check_ins == NULL) {
+                            user.check_ins = []
+                        }
                         user.check_ins.push(newCheckIn)
                         user.markModified('check_ins')
                         user.save()
