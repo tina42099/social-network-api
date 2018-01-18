@@ -12,12 +12,11 @@ var userSchema = new Schema({
     gender: String,
     address: String,
     check_ins: [{
-        location: [{
-            place: String,
-            status: String,
-            check_in_time: Date,
-            check_out_time: Date
-        }],
+        place_name: String,
+        coordinates: {lng: String, lat: String},
+        //status: String,
+        check_in_time: Date,
+        check_out_time: Date
     }],
     friends: [String],
     interests: [String],

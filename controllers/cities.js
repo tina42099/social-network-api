@@ -11,12 +11,14 @@ exports.createCity = (req, res, next) => {
     
     if (req.body.name)
         cityData.name = req.body.name;
-    if (req.body.location_coordinates)
-        cityData.location_coordinates = req.body.location_coordinates;
-    if (req.body.past_visitors)
-        cityData.past_visitors = req.body.past_visitors;
-    if (req.body.description)
-        cityData.description = req.body.description;
+    if (req.body.zipcode)
+        cityData.zipcode = req.body.zipcode;
+    if (req.body.state)
+        cityData.state = req.body.state;
+    if (req.body.country)
+        cityData.country = req.body.country;
+    // if (req.body.description)
+    //     cityData.description = req.body.description;
     if (req.body.image)
         cityData.image = req.body.image;
 
