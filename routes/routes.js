@@ -36,6 +36,12 @@ router.route('/cities/:cityId/id')
 router.route('/auth/login')
   .post(auth.loginUser)
 
+router.route('/users/checkIn')
+  .post(users.updateCheckIn)
+
+router.route('/users/checkOut')
+  .put(users.updateCheckOut)
+
 router.route('/users/addFriend')
   .post(auth.validateUser, users.addFriend)
 

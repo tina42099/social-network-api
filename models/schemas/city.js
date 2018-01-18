@@ -5,9 +5,11 @@ const validator = require('email-validator');
 
 var citySchema = new Schema({
     name: String,
-    location_coordinates: {type: String, unique: true},
+    state: String,
+    country: String,
+    zipcode: {type: String, unique: true},
     past_visitors: [String],
-    description: String,
+    // description: String,
     image: String
   },
   {
