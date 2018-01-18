@@ -1,7 +1,8 @@
 const User = require('../models/schemas/user');
+const City = require('../models/schemas/city');
 const config = require('../models/config');
 const jwt = require('jwt-simple')
-
+const geocoding = require('geocoder')
 /*
 * C.R.U.D. routes
 */

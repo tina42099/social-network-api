@@ -25,8 +25,8 @@ var citySchema = new Schema({
 citySchema.pre('save', function(callback) {
     if (!this.name)
         return callback(new Error('Missing name'));
-    if (!this.location_coordinates)
-        return callback(new Error('Missing location coordinates'));
+    if (!this.zipcode)
+        return callback(new Error('Missing zipcode'));
     callback();
 });
 
