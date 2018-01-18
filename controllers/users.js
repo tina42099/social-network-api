@@ -65,7 +65,7 @@ exports.getAllUsers = (req, res, next) => {
 }
 
 exports.getUserById = (req, res, next) => {
-    User.findById(req.body.id).then(user => {
+    User.findById(req.params.userId).then(user => {
         if (!user) return res.status(404).send('Could not find user: invalid id');
         return res.json(user)
     }).catch(next);
@@ -123,7 +123,6 @@ exports.addInterests = (req, res, next) => {
 }
 
 exports.search = (req, res, next) => {
-
     User.find({"name": { $regex : req.params.value, '$options' : 'i'} })
     .then((user) => {
         console.log(JSON.stringify(user))

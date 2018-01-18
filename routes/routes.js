@@ -16,7 +16,7 @@ router.route('/users')
   .get(users.getAllUsers)
 
 router.route('/users/:userId/id')
-  .get(auth.validateUser, users.getUserById)
+  .get(users.getUserById)
   .put(auth.validateUser, users.updateUser)
   .delete(auth.validateUser, users.deleteUser)
 
