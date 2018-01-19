@@ -28,11 +28,11 @@ exports.createCity = (req, res, next) => {
     .then(city => {
         if (!city) return res.status(500).send('City failed to create')
     }).catch(err => {
-        if (err) {
-            if (err.code === 11000)
-                return res.status(400).send('City already registered');
+        // if (err) {
+        //     if (err.code === 11000)
+        //         return res.status(400).send('City already registered');
             return res.status(400).send(err.message);
-        }
+       // }
     });
 };
 

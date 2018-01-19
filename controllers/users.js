@@ -109,6 +109,9 @@ exports.updateCheckIn = (req, res, next) => {
                             check_in_time: new Date()
                         }
                         console.log(newCheckIn)
+                        if (!user.check_ins) {
+                            user.check_ins = []
+                        }
                         user.check_ins.push(newCheckIn)
                         user.markModified('check_ins')
                         user.save()
@@ -118,7 +121,8 @@ exports.updateCheckIn = (req, res, next) => {
                     }).catch(next)
                 }
                 else {
-                    const cityData = {}
+                    console.log(req.body)
+                    let cityData = {}
                     cityData.zipcode = zipcode
                     cityData.past_visitors = []
                     cityData.past_visitors.push(req.body.id)
@@ -130,9 +134,11 @@ exports.updateCheckIn = (req, res, next) => {
                         }
                         if (results[i].types[0] === "administrative_area_level_1") {
                             cityData.state = results[i].long_name
+                            console.log(cityData.state)
                         }
                         if (results[i].types[0] === "country") {
                             cityData.country = results[i].long_name
+                            console.log(cityData.country)
                         }
                     }
                     // cityData.name = results.administrativeAreaLevel1
@@ -148,7 +154,7 @@ exports.updateCheckIn = (req, res, next) => {
                             check_in_time: new Date()
                         }
                         console.log(newCheckIn)
-                        if (user.check_ins == NULL) {
+                        if (!user.check_ins) {
                             user.check_ins = []
                         }
                         user.check_ins.push(newCheckIn)
@@ -157,7 +163,12 @@ exports.updateCheckIn = (req, res, next) => {
                         .then(() => {
                             return res.sendStatus(200)
                         }).catch(next)
-                    }).catch(next)
+                    }).catch(err => {
+                        if (err.code === 11000) {
+                            console.log('This is where the error was')
+                        }
+                        return next(err)
+                    })
                 }
                 // }.then(city => {
                 //     if(!city) return res.status(500).send('City failed to create')
@@ -178,6 +189,12 @@ exports.updateCheckOut = (req, res, next) => {
         else {
             last_check_in = user.check_ins.pop()
             last_check_in.check_out_time = new Date()
+            user.check_ins.push(last_check_in)
+            user.markModified('check_ins')
+            user.save()
+            .then(() => {
+                return res.sendStatus(200)
+            }).catch(next)
         }
     }).catch(next);
 }
@@ -226,6 +243,41 @@ exports.addFriend = (req, res, next) => {
         user.markModified('friends')
         user.save()
         return res.json(user)
+    }).catch(next)
+}
+
+exports.seeFriend = (req, res, next) => {
+    User.findById(req.body.userId).then(user => {
+        console.log(req.body.userId)
+        console.log(req.params.friendId)
+        if(!user) res.status(404).send('No user with id: ' + req.body.userId)
+        let friend_locations = []
+        let friend_check_in = {}
+        if (user.friends.length == 0) {
+            return res.json(friend_locations)
+        }
+        user.friends.forEach(function(friendId) {
+            User.findById(req.body.friendId).then(friend => {
+                length = friend.check_ins.length
+                if (length > 0) {
+                    last_check_in = friend.check_ins[length - 1]
+                    let active = true
+                    if (last_check_in.check_out_time) {
+                        active = false
+                        friend_check_in.push({check_out: last_check_in.check_out_time})
+                    }
+                    friend_check_in = {
+                        name: friend.name,
+                        location: {lat: last_check_in.coordinates.lat, lng: last_check_in.coordinates.lng},
+                        activity: active,
+                        check_in: last_check_in.check_in_time
+                    }
+                    friend_locations.push(friend_check_in)
+                }
+            })
+        })
+        console.log(friend_locations)
+        return res.json(friend_locations)
     }).catch(next)
 }
 

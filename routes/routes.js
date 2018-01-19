@@ -42,6 +42,9 @@ router.route('/users/checkIn')
 router.route('/users/checkOut')
   .put(users.updateCheckOut)
 
+router.route('/users/seeFriends')
+  .get(users.seeFriend)
+
 router.route('/users/:friendId/addFriend')
   .post(auth.validateUser, users.addFriend)
 

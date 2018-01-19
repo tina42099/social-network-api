@@ -7,7 +7,7 @@ var citySchema = new Schema({
     name: String,
     state: String,
     country: String,
-    zipcode: {type: String, unique: true},
+    zipcode: {type: String},
     past_visitors: [String],
     // description: String,
     image: String
@@ -23,10 +23,10 @@ var citySchema = new Schema({
 );
 
 citySchema.pre('save', function(callback) {
-    if (!this.name)
-        return callback(new Error('Missing name'));
-    if (!this.zipcode)
-        return callback(new Error('Missing zipcode'));
+    // if (!this.name)
+    //     return callback(new Error('Missing name'));
+    // if (!this.zipcode)
+    //     return callback(new Error('Missing zipcode'));
     callback();
 });
 
