@@ -247,39 +247,49 @@ exports.addFriend = (req, res, next) => {
 }
 
 exports.seeFriend = (req, res, next) => {
-    User.findById(req.body.userId).then(user => {
-        console.log(req.body.userId)
-        console.log(req.params.friendId)
-        if(!user) res.status(404).send('No user with id: ' + req.body.userId)
+    User.findById(req.params.userId).then(user => {
+        if(!user) res.status(404).send('No user with id: ' + req.params.userId)
         let friend_locations = []
-        let friend_check_in = {}
+        //let friend_check_in = {}
+        console.log(user.friends)
         if (user.friends.length == 0) {
             return res.json(friend_locations)
         }
-        user.friends.forEach(function(friendId) {
-            User.findById(req.body.friendId).then(friend => {
-                length = friend.check_ins.length
-                if (length > 0) {
-                    last_check_in = friend.check_ins[length - 1]
-                    let active = true
-                    if (last_check_in.check_out_time) {
-                        active = false
-                        friend_check_in.push({check_out: last_check_in.check_out_time})
-                    }
-                    friend_check_in = {
-                        name: friend.name,
-                        location: {lat: last_check_in.coordinates.lat, lng: last_check_in.coordinates.lng},
-                        activity: active,
-                        check_in: last_check_in.check_in_time
-                    }
-                    friend_locations.push(friend_check_in)
-                }
+        Promise.all(
+            user.friends.map(function(friendId) {
+                return User.findById(friendId)
             })
-        })
-        console.log(friend_locations)
-        return res.json(friend_locations)
-    }).catch(next)
+        )
+        .then(friends => {
+            Promise.all(
+                friends.map(friend => {
+                    let friend_check_in = {}
+                    length = friend.check_ins.length
+                    if (length > 0) {
+                        last_check_in = friend.check_ins[length - 1]
+                        //console.log(last_check_in)
+                        let active = true
+                        if (last_check_in.check_out_time) {
+                            active = false
+                            friend_check_in.check_out = last_check_in.check_out_time
+                        }
+                        friend_check_in = {
+                            name: friend.name,
+                            location: {lat: last_check_in.coordinates.lat, lng: last_check_in.coordinates.lng},
+                            activity: active,
+                            check_in: last_check_in.check_in_time,
+                        }
+                    }
+                    return friend_check_in
+                })
+            )
+            .then(friend_check_in => {
+                return res.json(friend_check_in)
+            }).catch(next)
+        }).catch(next)
+    })
 }
+      
 
 exports.addInterests = (req, res, next) => {    
     User.findById(req.body.userId)
