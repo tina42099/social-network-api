@@ -7,7 +7,7 @@ exports.loginUser = (req, res, next) => {
         return res.status(400).send('Missing email');
     if (typeof req.body.password !== 'string')
         return res.status(400).send('Missing password');
-
+    console.log("auth logging in")
     User.findOne({email: req.body.email}, (err, user) => {
         if (err) return next(err);
         if (!user) return res.status(400).send('No user with that email');
