@@ -82,6 +82,7 @@ exports.updateCheckIn = (req, res, next) => {
 
     //geocoding.location(config, function(err, data) {
     geocoding.reverseGeocode(req.body.lat, req.body.lng, function(err, data) {
+        console.log(data.results)
         if (err) return res.status(500).send('could not find location based on coordinates')
         else {
             let results = data.results[0].address_components
